@@ -1,10 +1,10 @@
-import numpy
+import numpy as np
 import pickle
 from optparse import OptionParser
 import os.path
 
 NB_ALGO = 4
-PROPERTIES = ["qualite", "timbre", "espace", "defauts"]
+PROPERTIES = ["qualite", "defauts"]
 
 def to_float(a):
 	try:
@@ -77,6 +77,39 @@ class Data():
 					print(item + ": " + str(algo[item]))
 				print()
 				k += 1
+
+	def automaticFill(self, n):
+		for subject in range(n):
+			rep = []
+			for algo in range(NB_ALGO):
+				rep.append({})
+				for pro in PROPERTIES:
+					rep[algo][pro] = np.random.normal(5)
+			self.results[subject] = rep
+
+	def analyse(self):
+		algos = {}
+		for subject in self.results:
+			k = 1
+			for algo in self.getRes(subject):
+				if k not in algos:
+					algos[k] = []
+
+				## A revoir
+				score = (algo["qualite"] + (10 - algo["defauts"]))/2
+
+				algos[k].append(score)
+
+				k += 1
+
+		for algo in algos:
+			print("___ Algo", algo)
+			mean = np.mean(algos[algo])
+			standart_deviation = np.std(algos[algo])
+			algos[algo] = (mean, standart_deviation)
+			print("mean:", mean)
+			print("standart deviation:", standart_deviation)
+		return algos
 
 
 if __name__ == "__main__":
