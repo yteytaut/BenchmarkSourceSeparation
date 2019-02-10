@@ -6,6 +6,7 @@ import os.path
 NB_ALGO = 4
 PROPERTIES = ["qualite", "defauts"]
 
+
 def to_float(a):
 	try:
 		return float(a)
@@ -110,7 +111,6 @@ class Data():
 			print("mean:", mean)
 			print("standart deviation:", standart_deviation)
 		return algos
-
 
 if __name__ == "__main__":
 
