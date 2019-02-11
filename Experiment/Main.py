@@ -10,9 +10,9 @@ import os
 import sys
 from optparse import OptionParser
 
-PAUSE1 = 5
+PAUSE1 = 3
 PAUSE2 = 10
-PAUSE3 = 2
+PAUSE3 = 5
 
 def show_image(path, ecran):
 	try :
