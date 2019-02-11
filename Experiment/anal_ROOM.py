@@ -4,6 +4,7 @@ from optparse import OptionParser
 import os.path
 
 NB_ALGO = 4
+NB_MIX = 3
 PROPERTIES = ["qualite", "defauts"]
 
 
@@ -19,17 +20,29 @@ def acqu(sujet):
 	print("________ ACQUIRE SUBJECT", sujet)
 	print()
 	for algo in range(NB_ALGO):
-		print("____ ALGO", algo)
+		print("____ ALGO", algo + 1)
 		print()
 		rep.append({})
-		for pro in PROPERTIES:
-			print(pro + ": ", end="")
-			rep[algo][pro] = to_float(input(""))
-			while (rep[algo][pro] > 10 or rep[algo][pro] < 0):
-				print("Incorect input, please try again.")
-				rep[algo][pro] = to_float(input(""))
-					
+		for mix in range(NB_MIX):
+			print("___ MIX", mix + 1)
+
+			for pro in PROPERTIES:
+				if pro not in rep[algo]:
+					rep[algo][pro] = []
+				print(pro + ": ", end="")
+				temp = to_float(input(""))
+				while (temp < -5 or temp > 5):
+					print("Incorect input, please try again.")
+					temp = to_float(input(""))
+				rep[algo][pro].append(temp)
 		print()
+
+	for algo in range(NB_ALGO):
+		for pro in PROPERTIES:
+			rep[algo][pro] = np.mean(rep[algo][pro])
+						
+	print()
+
 	return rep
 
 
@@ -118,12 +131,12 @@ if __name__ == "__main__":
 	parser = OptionParser(usage)
 
 	parser.add_option("-d", "--name", type="string",
-	                  help="Name of the database.",
-	                  dest="name", default="DATA.sm")
+					  help="Name of the database.",
+					  dest="name", default="DATA_ROOM.sm")
 
 	parser.add_option("-p", "--print", type="string",
-	                  help="1 if you want to print the data.",
-	                  dest="pprint", default="0")
+					  help="1 if you want to print the data.",
+					  dest="pprint", default="0")
 
 	options, arguments = parser.parse_args()
 
