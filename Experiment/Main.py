@@ -7,6 +7,7 @@ import pygame
 from pygame.locals import*
 from glob import glob
 import os
+import sys
 from optparse import OptionParser
 
 PAUSE1 = 5
@@ -24,7 +25,7 @@ def show_image(path, ecran):
 	pygame.display.flip()
 
 
-def main(folder="FACES/", k=0):
+def main(acoustic, folder="images/", k=0):
 	pygame.init()
 
 	ecran = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -52,10 +53,10 @@ def main(folder="FACES/", k=0):
 			  "Algo3_original.png", "Algo3_Mix1.png", "Algo3_Mix2.png", "Algo3_Mix3.png", \
 			  "Algo4_original.png", "Algo4_Mix1.png", "Algo4_Mix2.png", "Algo4_Mix3.png"]
 
-	audio = ["Algo1_original.wav", "Algo1_Mix1.wav", "Algo1_Mix2.wav", "Algo1_Mix3.wav", \
-			  "Algo2_original.wav", "Algo2_Mix1.wav", "Algo2_Mix2.wav", "Algo2_Mix3.wav", \
-			  "Algo3_original.wav", "Algo3_Mix1.wav", "Algo3_Mix2.wav", "Algo3_Mix3.wav", \
-			  "Algo4_original.wav", "Algo4_Mix1.wav", "Algo4_Mix2.wav", "Algo4_Mix3.wav"]	
+	audio = ["Algo1_original_normalized.wav", "Algo1_Mix1_normalized.wav", "Algo1_Mix2_normalized.wav", "Algo1_Mix3_normalized.wav", \
+			  "Algo2_original_normalized.wav", "Algo2_Mix1_normalized.wav", "Algo2_Mix2_normalized.wav", "Algo2_Mix3_normalized.wav", \
+			  "Algo3_original_normalized.wav", "Algo3_Mix1_normalized.wav", "Algo3_Mix2_normalized.wav", "Algo3_Mix3_normalized.wav", \
+			  "Algo4_original_normalized.wav", "Algo4_Mix1_normalized.wav", "Algo4_Mix2_normalized.wav", "Algo4_Mix3_normalized.wav"]	
 	k = 0
 	continuer = True
 
@@ -75,7 +76,7 @@ def main(folder="FACES/", k=0):
 				pygame.quit()
 				exit()
 
-		playsound("audio/" + audio[k])
+		playsound("audio/" + acoustic + "/" + audio[k])
 		k += 1
 
 		show_image("images/Pause.png", ecran)
@@ -109,4 +110,10 @@ def main(folder="FACES/", k=0):
 
 	pygame.quit()
 
-main(folder="images/")
+if __name__ == "__main__":
+
+	if len(sys.argv) == 2 :
+		main(sys.argv[1])
+
+	else:
+		print("Usage: Python3 Main.py <ROOM or ANECHOIC>")  
