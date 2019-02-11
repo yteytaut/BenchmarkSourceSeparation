@@ -110,7 +110,7 @@ class Data():
 					algos[k] = []
 
 				## A revoir
-				score = (algo["qualite"] + (10 - algo["defauts"]))/2
+				score = (5 + algo["qualite"] + (10 - 2 * algo["defauts"]))/2
 
 				algos[k].append(score)
 
